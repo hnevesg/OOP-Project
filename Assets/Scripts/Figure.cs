@@ -7,10 +7,10 @@ public class Figure : MonoBehaviour
     private float h;
     private float w;
 
-    protected float height
+    public float height
     {
         get { return h; }
-        set
+        protected set
         {
             if (value > 0)
             {
@@ -18,10 +18,10 @@ public class Figure : MonoBehaviour
             }
         }
     }
-    protected float width 
+    public float width 
     { 
         get { return w; }
-        set
+        protected set
         {
             if (value > 0)
             {
@@ -33,9 +33,7 @@ public class Figure : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Info();
-        Debug.Log("Height: " + height);
-        Debug.Log("Width: " + width);
+        
     }
 
     // Update is called once per frame
@@ -46,5 +44,12 @@ public class Figure : MonoBehaviour
 
     public virtual void Info(){
         Debug.Log("It's a figure");
+    }
+
+    void OnMouseDown()
+    {
+        Info();
+        Debug.Log("Height: " + height);
+        Debug.Log("Width: " + width);
     }
 }

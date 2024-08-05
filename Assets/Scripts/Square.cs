@@ -5,7 +5,7 @@ using UnityEngine;
 // INHERITANCE
 public class Square : Figure
 {
-    public Square(float h, float w)
+    public void Initialize(float h, float w)
     {
         height = h;
         width = w;
@@ -14,9 +14,6 @@ public class Square : Figure
     // Start is called before the first frame update
     void Start()
     {
-        Info();
-        Debug.Log("Height: " + height);
-        Debug.Log("Width: " + width);
     }
 
     // Update is called once per frame
@@ -28,5 +25,12 @@ public class Square : Figure
     // POLYMORPHISM
     public override void Info(){
         Debug.Log("It's a square");
+    }
+
+    void OnMouseDown()
+    {
+        Info();
+        Debug.Log("Height: " + height);
+        Debug.Log("Width: " + width);
     }
 }

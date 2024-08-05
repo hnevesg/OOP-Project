@@ -6,66 +6,82 @@ using UnityEngine;
 public class GameScript : MonoBehaviour
 {
     private int nFigures;
+    public GameObject sphere;
+    public GameObject cube;
+    
     // Start is called before the first frame update
     void Start()
     {
         nFigures = Convert.ToInt32(TitleScript.inputField.text);
+        StartCoroutine(FiguresCoroutine());       
     }
 
     // Update is called once per frame
     void Update()
     {
-        //create nFigures figures of types Circle and Square with random color and size through time
+    }
+
+    IEnumerator FiguresCoroutine(){
         for (int i = 0; i < nFigures; i++)
         {
             generateFigure();
             if (i % 2 == 0)
             {
-                System.Threading.Thread.Sleep(1000);
+                yield return new WaitForSeconds(1);
             }
         }
     }
 
-/*
-   public GameObject circlePrefab;
-
-    public void InitializeCircle()
-    {
+    GameObject generateFigure(){
         if (randomNumber() % 2 == 0)
         {
-            GameObject circleObject = Instantiate(circlePrefab);
-            Circle circle = circleObject.AddComponent<Circle>();
-            SetCircleDimensions(circle, UnityEngine.Random.Range(1, 10), UnityEngine.Random.Range(1, 10));
-            circle.gameObject.GetComponent<Renderer>().material.color = randomColor();
-        }
-    }
-*/
-    Figure generateFigure(){
-        if (randomNumber() % 2 == 0)
-        {
+            GameObject sphereInstance = Instantiate(sphere, new Vector3(randomNumber(), randomPositiveNumber(), randomNumber()), Quaternion.identity);
+            Circle circle = sphereInstance.AddComponent<Circle>();
             float height = UnityEngine.Random.Range(1.0f, 10.0f);
             float width = UnityEngine.Random.Range(1.0f, 10.0f);
-            Circle circle = new Circle(height, width);
-            circle.gameObject.GetComponent<Renderer>().material.color = randomColor();
-            return circle;
+            circle.Initialize(height, width);
+            sphereInstance.GetComponent<Renderer>().material.color = randomColor();
+            return sphereInstance;
         }
         else
         {
-            float height = UnityEngine.Random.Range(1.0f, 10.0f);
-            float width = UnityEngine.Random.Range(1.0f, 10.0f);
-            Square square = new Square(height, width);
-            square.gameObject.GetComponent<Renderer>().material.color = randomColor();
-            return square;
+            GameObject cubeInstance = Instantiate(cube, new Vector3(randomNumber(), randomPositiveNumber(), randomNumber()), Quaternion.identity);
+            Square square = cubeInstance.AddComponent<Square>();
+            float height = randomPositiveNumber();
+            float width = randomPositiveNumber();
+            square.Initialize(height, width);
+            cubeInstance.transform.localScale = new Vector3(square.width, square.height, 1); 
+            cubeInstance.gameObject.GetComponent<Renderer>().material.color = randomColor();
+            return cubeInstance;
         }
+    }
+
+    int randomPositiveNumber()
+    {
+        return UnityEngine.Random.Range(1, 5);
     }
 
     int randomNumber()
     {
-        return UnityEngine.Random.Range(1, 10);
+        return UnityEngine.Random.Range(-8, 9);
     }
 
     Color randomColor()
     {
-        return new Color(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1));
+        int random = UnityEngine.Random.Range(0, 5);
+        switch (random)
+        {
+            case 0:
+                return Color.red;
+            case 1:
+                return Color.green;
+            case 2:
+                return Color.blue;
+            case 3:
+                return Color.yellow;
+            case 4:
+                return Color.black;
+        }
+        return Color.white;
     }
 }

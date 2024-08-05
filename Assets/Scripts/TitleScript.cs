@@ -18,6 +18,7 @@ public class TitleScript : MonoBehaviour
     {
         inputField = GetComponent<TMP_InputField>();
         startButton = GetComponent<Button>();
+        DontDestroyOnLoad(inputField);
     }
 
     // Update is called once per frame
@@ -36,7 +37,6 @@ public class TitleScript : MonoBehaviour
     {
        if(isValidInput(inputField.text, out nFigures)){
             inputField.textComponent.color = Color.black;
-            DontDestroyOnLoad(inputField);
             UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
         }else{
             Debug.Log("Input must be a number greater than 0");
