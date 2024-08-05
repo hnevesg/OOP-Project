@@ -7,16 +7,18 @@ using UnityEngine.UI;
 
 public class TitleScript : MonoBehaviour
 {
-    public TMP_InputField inputField;
+    public static TMP_InputField inputField;
 
     // ENCAPSULATION
     private int nFigures;
     private Button startButton;
-    
+
     // Start is called before the first frame update
     void Start()
     {
+        inputField = GetComponent<TMP_InputField>();
         startButton = GetComponent<Button>();
+        DontDestroyOnLoad(inputField);
     }
 
     // Update is called once per frame
